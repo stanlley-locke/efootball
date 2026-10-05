@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#101713">
+	<title>Touchline | eFootball Match Lobby</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+	<div class="app">
+		<aside class="sidebar">
+			<a class="brand" href="#lobby" aria-label="Touchline home"><span class="brand-mark">T</span><span class="brand-name">TOUCH<span>LINE</span></span></a>
+			<div class="side-label">Match center</div>
+			<nav class="nav-list" aria-label="Main navigation">
+				<button class="nav-item active" data-view="lobby"><span class="nav-icon">⌂</span><span class="nav-text">Match lobby</span><span class="nav-count" id="navCount">4</span></button>
+				<button class="nav-item" data-view="stakeroom"><span class="nav-icon">⌕</span><span class="nav-text">StakeRoom</span></button>
+				<button class="nav-item" data-view="matches"><span class="nav-icon">◷</span><span class="nav-text">My matches</span></button>
+				<button class="nav-item" data-view="leaderboard"><span class="nav-icon">♜</span><span class="nav-text">Leaderboard</span></button>
+				<button class="nav-item" data-view="account"><span class="nav-icon">◈</span><span class="nav-text">Account centre</span></button>
+			</nav>
+			<div class="side-bottom">
+				<div class="demo-note"><strong><span></span> Demo environment</strong><p>Wallet funds, stakes, and payouts are simulated. No real money changes hands.</p></div>
+				<div class="profile"><div class="avatar">JD</div><div><div class="profile-name">Jordan Davis</div><div class="profile-status">Online · eFootball 2026</div></div></div>
+			</div>
+		</aside>
+
+		<main class="main" id="lobby">
+			<header class="topbar"><div class="crumb">Match center <span> / </span> <b id="crumbCurrent">Open lobby</b></div><div class="top-actions"><div class="online"><i></i><span>Demo account</span></div><button class="wallet" id="walletShortcut">◈ <span id="walletBalance">$25.00</span></button></div></header>
+			<div class="content" id="lobbyContent">
+				<section class="heading-row"><div><div class="eyebrow"><span></span> eFootball · 2026 season</div><h1 id="pageTitle">FIND YOUR MATCH.</h1><p class="subtitle" id="pageSubtitle">Pick a stake. Find your opponent. Let the match decide.</p></div><button class="primary-btn" id="focusCreate"><span>＋</span> Create a match</button></section>
+				<section class="overview" aria-label="Lobby statistics">
+					<div class="stat"><div class="stat-icon">◉</div><div><div class="stat-value" id="openCount">04</div><div class="stat-label">Open challenges</div></div></div>
+					<div class="stat"><div class="stat-icon">◈</div><div><div class="stat-value" id="lockedStat">$0.00</div><div class="stat-label">Your locked stakes</div></div></div>
+					<div class="stat"><div class="stat-icon">↗</div><div><div class="stat-value">128</div><div class="stat-label">Players online</div></div></div>
+				</section>
+				<div class="workspace">
+					<section class="rooms-panel" aria-label="Open match challenges">
+						<div class="panel-head"><h2 class="panel-title" id="roomHeading">Open challenges</h2><span class="room-total" id="roomTotal">4 matches waiting</span></div>
+						<div class="filter-row" id="filters"><button class="filter-btn active" data-filter="all">All stakes</button><button class="filter-btn" data-filter="low">Under $5</button><button class="filter-btn" data-filter="high">$5+</button><input class="search" type="search" id="search" placeholder="⌕  Find player" aria-label="Find player"></div>
+						<div class="room-list" id="roomList"></div>
+					</section>
+					<aside class="side-panel" id="createPanel">
+						<div class="panel-head"><h2 class="panel-title">Set up a match</h2></div>
+						<form class="create-body" id="createForm">
+							<div class="field"><label for="teamName">Your in-game team name</label><input id="teamName" maxlength="24" value="Jordan FC" required></div>
+							<div class="field"><label for="stake">Stake in USD</label><div class="money-input"><span>$</span><input id="stake" type="number" min="1.00" max="10000.00" step="0.01" value="2.00" required></div></div>
+							<div class="field"><label for="opponentType">Opponent</label><select id="opponentType"><option value="human">Real player</option><option value="ai">eFootball AI</option></select></div>
+							<div class="field" id="aiDifficultyField" hidden><label for="aiDifficulty">AI difficulty</label><select id="aiDifficulty"><option>Regular</option><option>Top Player</option><option>Superstar</option><option>Legend</option></select></div>
+							<div class="field"><label for="challengeVisibility">Match access</label><select id="challengeVisibility"><option value="public">Public StakeRoom listing</option><option value="private">Private room · share invite code</option></select></div>
+							<div class="field"><label for="platform">Platform</label><select id="platform"><option>PlayStation 5</option><option>PlayStation 4</option><option>Xbox Series X|S</option><option>PC</option><option>Mobile</option></select></div>
+							<div class="field"><label for="matchType">Match format</label><select id="matchType"><option>1v1 · Dream Team</option><option>1v1 · Authentic Team</option></select></div>
+							<div class="payout-box" aria-live="polite"><div class="payout-line"><span id="potLabel">Combined pot</span><strong id="potPreview">$4.00</strong></div><div class="payout-line"><span id="feeLabel">Platform fee · 30%</span><strong id="feePreview">−$1.20</strong></div><div class="payout-line total"><span id="winLabel">Winner receives</span><strong id="winPreview">$2.80</strong></div></div>
+							<button class="primary-btn create-submit" type="submit">Post open challenge <span>→</span></button>
+							<p class="fee-note">Both players must stake the same amount. The 30% fee is taken from the combined pot. Demo funds only.</p>
+						</form>
+						<div class="recent"><div class="recent-head"><h3>Recent results</h3><span>Today</span></div><div id="recentList"></div></div>
+					</aside>
+				</div>
+			</div>
+			<section class="account-view" id="accountView" hidden>
+				<div class="heading-row"><div><div class="eyebrow"><span></span> Your account</div><h1>ACCOUNT CENTRE.</h1><p class="subtitle">Demo wallet, transaction history, and realized match results.</p></div></div>
+				<div class="account-grid">
+					<section class="account-panel">
+						<div class="balance-hero"><div class="stat-label">Available balance</div><div class="balance-amount" id="accountBalance">$25.00</div><div class="balance-sub">Available funds exclude active locked stakes.</div><div class="balance-split"><div class="balance-chip"><span>Locked in matches</span><strong id="accountLocked">$0.00</strong></div><div class="balance-chip"><span>Realized profit / loss</span><strong id="accountProfit">$0.00</strong></div></div></div>
+						<div class="account-forms">
+							<form class="account-form" id="depositForm"><h3>Deposit demo funds</h3><div class="field"><label for="depositAmount">Amount · minimum $1.00</label><input id="depositAmount" type="number" min="1.00" step="0.01" value="10.00" required></div><button class="primary-btn" type="submit">Add demo funds</button></form>
+							<form class="account-form" id="withdrawForm"><h3>Withdraw demo funds</h3><div class="field"><label for="withdrawAmount">Amount · available balance only</label><input id="withdrawAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div><button class="secondary-btn" type="submit">Withdraw</button></form>
+						</div>
+					</section>
+					<section class="account-panel"><div class="panel-head"><h2 class="panel-title">Wallet activity</h2></div><table class="account-table"><thead><tr><th>Type</th><th>Date</th><th>Amount</th></tr></thead><tbody id="walletHistory"></tbody></table><div class="account-empty" id="walletEmpty" hidden>No deposits or withdrawals yet.</div></section>
+				</div>
+				<section class="account-panel section-gap"><div class="panel-head"><h2 class="panel-title">Realized match results</h2></div><table class="account-table"><thead><tr><th>Match</th><th>Outcome</th><th>Net P/L</th></tr></thead><tbody id="matchHistory"></tbody></table><div class="account-empty" id="matchHistoryEmpty" hidden>No settled matches yet.</div></section>
+				<p class="fee-note">Demo only. This page stores sample data in this browser and does not process real deposits or withdrawals.</p>
+			</section>
+			<section class="stake-room-view" id="stakeRoomView" hidden>
+				<div class="heading-row"><div><div class="eyebrow"><span></span> Open challenge exchange</div><h1>STAKEROOM.</h1><p class="subtitle">Search an exact stake to find players ready to play. Results refresh every 15 seconds.</p></div></div>
+				<section class="account-panel section-gap"><div class="panel-head"><h2 class="panel-title">Join by room code</h2><span class="room-total">Private invite</span></div><form class="stake-search-bar" id="joinCodeForm"><div class="field"><label for="joinRoomCode">Match code</label><input id="joinRoomCode" maxlength="11" placeholder="TL-XXXXXXXX" autocomplete="off" required></div><div class="field"><label for="joinCodeTeam">Your in-game team name</label><input id="joinCodeTeam" maxlength="24" value="Jordan FC" required></div><button class="primary-btn" type="submit">Join room</button></form></section>
+				<section class="rooms-panel" aria-label="StakeRoom listings">
+					<div class="panel-head"><h2 class="panel-title">Available players</h2><span class="room-total" id="stakeRoomCount">0 listings</span></div>
+					<form class="stake-search-bar" id="stakeSearchForm"><div class="field"><label for="stakeSearchAmount">Exact stake amount</label><div class="money-input"><span>$</span><input id="stakeSearchAmount" type="number" min="1.00" step="0.01" value="2.00" required></div></div><button class="primary-btn" type="submit">Search stakes</button><span class="feed-status" id="feedStatus" role="status" aria-live="polite">Demo listings · refreshes automatically</span></form>
+					<div class="stake-feed" id="stakeFeed"></div>
+				</section>
+				<p class="fee-note">Listings are shared through the local demo server. Public use needs a secured, production-hosted feed service.</p>
+				<p class="match-note">Share only the invite code externally. Match discussion must stay in the website's matchroom chat.</p>
+			</section>
+			<section class="match-view" id="matchView" hidden></section>
+		</main>
+	</div>
+	<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="dialog"><div class="dialog-top"><div><h2 id="dialogTitle">Join this match?</h2><p id="dialogDescription">Confirm the match details before taking the challenge.</p></div><button class="close-btn" id="closeDialog" aria-label="Close">×</button></div><div class="confirm-summary" id="confirmSummary"></div><div class="dialog-actions"><button class="secondary-btn" id="cancelJoin">Cancel</button><button class="primary-btn" id="confirmJoin">Confirm match <span>→</span></button></div></div></div>
+	<div class="toast" id="toast" role="status"></div>
+
+	<script src="/js/app.js" defer></script>
+</body>
+</html>
